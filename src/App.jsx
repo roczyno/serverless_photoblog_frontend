@@ -2,7 +2,7 @@ import "./App.css";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
-import { Home } from "./pages/home/Home";
+import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import Verify from "./pages/verify/Verify";
 
