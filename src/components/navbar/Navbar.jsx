@@ -1,8 +1,13 @@
 import { Link } from "react-router";
 import "./navbar.scss";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar = () => {
   const user = true;
+
+  const handleLogout = () => {
+    alert(".vhsjshjlhlh");
+  };
   return (
     <div className="navbar">
       <div className="left">
@@ -13,10 +18,18 @@ const Navbar = () => {
       <div className="center">
         {user && (
           <>
-            <span>Upload Images</span>
-            <span>All Images</span>
-            <span>My Images</span>
-            <span>Bin</span>
+            <Link className="link" to="/upload">
+              <span>Upload Images</span>
+            </Link>
+            <Link className="link" to="/all">
+              <span>All Images</span>
+            </Link>
+            <Link className="link" to="/my">
+              <span>My Images</span>
+            </Link>
+            <Link className="link" to="/bin">
+              <span>Bin</span>
+            </Link>
           </>
         )}
       </div>
@@ -32,10 +45,14 @@ const Navbar = () => {
               </Link>
             </>
           ) : (
-            <img
-              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-            />
+            <div className="profile">
+              <LogoutIcon onClick={handleLogout} />
+              <img
+                className="dp"
+                src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt=""
+              />
+            </div>
           )}
         </div>
       </div>
