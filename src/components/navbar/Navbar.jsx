@@ -1,12 +1,16 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import "./navbar.scss";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar = () => {
-  const user = true;
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const user = userData ? userData.user : null;
+  const navigate = useNavigate;
 
   const handleLogout = () => {
-    alert(".vhsjshjlhlh");
+    localStorage.removeItem("userData");
+    navigate("/login");
+    window.location.reload();
   };
   return (
     <div className="navbar">

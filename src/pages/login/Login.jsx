@@ -2,24 +2,28 @@ import { useState } from "react";
 import "./login.scss";
 import axios from "axios";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "https://x4wlipaom3.execute-api.eu-west-1.amazonaws.com/Prod/login",
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post(`${BASE_URL}/login`, {
+        email,
+        password,
+      });
       console.log(res.data);
-      console.log(email + password);
+      localStorage.setItem("userData", JSON.stringify(res.data));
+      if (res.data) {
+        navigate("/all");
+
+        window.location.reload();
+      }
     } catch (error) {
       console.log(error);
     }
