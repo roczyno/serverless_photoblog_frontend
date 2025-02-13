@@ -26,12 +26,14 @@ const AllImages = () => {
   }, [BASE_URL, jwt]);
   return (
     <div className="allImages">
-      <Image />
-      <Image />
-      <Image />
-      <Image />
-      <Image />
-      <Image />
+      {images.map((img) => (
+        <Image
+          key={img.imageId}
+          src={img.imageUrl}
+          type="all"
+          showActions={false}
+        />
+      ))}
     </div>
   );
 };

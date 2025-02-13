@@ -5,12 +5,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const Navbar = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const user = userData ? userData.user : null;
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("userData");
     navigate("/login");
-    window.location.reload();
   };
   return (
     <div className="navbar">

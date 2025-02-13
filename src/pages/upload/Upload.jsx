@@ -9,8 +9,7 @@ const Upload = () => {
   const [base64, setBase64] = useState("");
   const [uploadStatus, setUploadStatus] = useState("idle");
   const fileInputRef = useRef(null);
-  // const userData = JSON.parse(localStorage.getItem("userData"));
-  // const user = userData ? userData.user : null;
+
   const jwt = JSON.parse(localStorage.getItem("userData")).idToken;
   const navigate = useNavigate();
 
