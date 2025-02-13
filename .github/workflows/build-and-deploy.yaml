@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BUCKET: www.taskmanager.io
+      BUCKET: www.photoblogapp.io
       DIST: dist
       REGION: eu-west-1
-      DIST_ID: EKKDBH7I74NHZ
+      DIST_ID: E234FE0J19S82P
 
     steps:
       - name: Checkout
