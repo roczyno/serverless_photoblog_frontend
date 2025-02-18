@@ -13,19 +13,18 @@ const Register = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "https://x4wlipaom3.execute-api.eu-west-1.amazonaws.com/Prod/register",
-        {
-          email,
-          password,
-          firstName,
-          lastName,
-        }
-      );
+      const res = await axios.post(`${BASE_URL}/register`, {
+        email,
+        password,
+        firstName,
+        lastName,
+      });
 
       console.log(res);
       if (res.data) {
