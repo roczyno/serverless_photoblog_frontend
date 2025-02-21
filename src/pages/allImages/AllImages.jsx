@@ -26,14 +26,22 @@ const AllImages = () => {
   }, [BASE_URL, jwt]);
   return (
     <div className="allImages">
-      {images.map((img) => (
-        <Image
-          key={img.imageId}
-          src={img.imageUrl}
-          type="all"
-          showActions={false}
-        />
-      ))}
+      {images.length === 0 ? (
+        <div>
+          <p>No Images has been uploaded</p>
+        </div>
+      ) : (
+        images.map((img) => (
+          <Image
+            key={img.imageId}
+            src={img.imageUrl}
+            owner={img.firstName + " " + img.lastName}
+            uploadDate={img.uploadDate}
+            type="all"
+            showActions={false}
+          />
+        ))
+      )}
     </div>
   );
 };

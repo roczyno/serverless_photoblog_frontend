@@ -16,26 +16,81 @@ const Bin = () => {
             Authorization: `${jwt}`,
           },
         });
-        console.log(res.data);
         setImages(res.data);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching recycled images:", error);
       }
     };
     getAllImages();
   }, [BASE_URL, jwt]);
+
+  /** 🗑 Permanently Delete Image */
+  const handleDelete = async (imageId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to permanently delete this image? This action cannot be undone."
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`${BASE_URL}/images/${imageId}/permanent-delete`, {
+        headers: {
+          Authorization: `${jwt}`,
+        },
+      });
+
+      // Remove image from state after successful deletion
+      setImages((prevImages) =>
+        prevImages.filter((img) => img.imageId !== imageId)
+      );
+
+      alert("Image permanently deleted!");
+    } catch (error) {
+      console.error("Error permanently deleting image:", error);
+      alert("Failed to delete image. Please try again.");
+    }
+  };
+
+  /** 🔄 Restore Image */
+  const handleRestore = async (imageId) => {
+    try {
+      await axios.put(
+        `${BASE_URL}/images/${imageId}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: `${jwt}`,
+          },
+        }
+      );
+
+      // Remove restored image from state
+      setImages((prevImages) =>
+        prevImages.filter((img) => img.imageId !== imageId)
+      );
+
+      alert("Image restored successfully!");
+    } catch (error) {
+      console.error("Error restoring image:", error);
+      alert("Failed to restore image. Please try again.");
+    }
+  };
+
   return (
     <div className="bin">
-      {images.map((img) => (
-        <Image
-          key={img.imageId}
-          src={img.imageUrl}
-          type="recycled"
-          showActions={true}
-          onDelete={() => console.log("Permanently deleting", img.id)}
-          onRestore={() => console.log("Restoring", img.id)}
-        />
-      ))}
+      {images.length === 0 ? (
+        <p className="empty-message">No images in the bin.</p>
+      ) : (
+        images.map((img) => (
+          <Image
+            key={img.imageId}
+            src={img.recycledImageUrl}
+            type="recycled"
+            showActions={true}
+            onDelete={() => handleDelete(img.imageId)}
+            onRestore={() => handleRestore(img.imageId)}
+          />
+        ))
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ const Upload = () => {
   const [base64, setBase64] = useState("");
   const [uploadStatus, setUploadStatus] = useState("idle");
   const fileInputRef = useRef(null);
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const jwt = JSON.parse(localStorage.getItem("userData")).idToken;
   const navigate = useNavigate();
@@ -35,16 +36,12 @@ const Upload = () => {
 
     setUploadStatus("uploading");
     try {
-      const response = await axios.post(
-        "https://x4wlipaom3.execute-api.eu-west-1.amazonaws.com/Prod/image/upload",
-        base64,
-        {
-          headers: {
-            Authorization: `${jwt}`,
-            "Content-Type": "text/plain",
-          },
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/image/upload`, base64, {
+        headers: {
+          Authorization: `${jwt}`,
+          "Content-Type": "text/plain",
+        },
+      });
 
       console.log("Upload response:", response.data);
       console.log("this is base64", base64);
