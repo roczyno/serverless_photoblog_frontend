@@ -77,9 +77,7 @@ const Register = () => {
         </div>
 
         {message && (
-          <span style={{ color: "green" }}>
-            Registration successful. Check email for verification code
-          </span>
+          <span style={{ color: "green" }}>Registration successful.</span>
         )}
         {error && <span style={{ color: "red" }}>{errorMessage.message}</span>}
       </div>
