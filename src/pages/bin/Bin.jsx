@@ -7,6 +7,7 @@ const Bin = () => {
   const jwt = JSON.parse(localStorage.getItem("userData")).idToken;
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const getAllImages = async () => {
@@ -19,6 +20,8 @@ const Bin = () => {
         setImages(res.data);
       } catch (error) {
         console.error("Error fetching recycled images:", error);
+      } finally {
+        setLoading(false); // Stop loading once the request completes
       }
     };
     getAllImages();
@@ -77,7 +80,9 @@ const Bin = () => {
 
   return (
     <div className="bin">
-      {images.length === 0 ? (
+      {loading ? (
+        <div className="loader">Loading images...</div> // Display loader while fetching
+      ) : images.length === 0 ? (
         <p className="empty-message">No images in the bin.</p>
       ) : (
         images.map((img) => (

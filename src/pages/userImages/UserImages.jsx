@@ -7,6 +7,7 @@ const UserImages = () => {
   const jwt = JSON.parse(localStorage.getItem("userData")).idToken;
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const getAllImages = async () => {
@@ -19,6 +20,8 @@ const UserImages = () => {
         setImages(res.data);
       } catch (error) {
         console.error("Error fetching images:", error);
+      } finally {
+        setLoading(false); // Stop loading once the request completes
       }
     };
     getAllImages();
@@ -70,9 +73,11 @@ const UserImages = () => {
 
   return (
     <div className="userImages">
-      {images.length === 0 ? (
+      {loading ? (
+        <div className="loader">Loading images...</div> // Display loader while fetching
+      ) : images.length === 0 ? (
         <div>
-          <p>You havent added any images yet</p>
+          <p>You haven't added any images yet</p>
         </div>
       ) : (
         images.map((img) => (

@@ -7,6 +7,7 @@ const AllImages = () => {
   const jwt = JSON.parse(localStorage.getItem("userData")).idToken;
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const getAllImages = async () => {
@@ -20,15 +21,20 @@ const AllImages = () => {
         setImages(res.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false); // Set loading to false after fetch completes
       }
     };
     getAllImages();
   }, [BASE_URL, jwt]);
+
   return (
     <div className="allImages">
-      {images.length === 0 ? (
+      {loading ? (
+        <div className="loader">Loading images...</div> // You can replace this with a spinner component
+      ) : images.length === 0 ? (
         <div>
-          <p>No Images has been uploaded</p>
+          <p>No Images have been uploaded</p>
         </div>
       ) : (
         images.map((img) => (
